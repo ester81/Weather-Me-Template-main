@@ -14,7 +14,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { finalize } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { WeatherService } from 'src/app/core/services/weather.service';
 import { CurrentWeather } from 'src/app/shared/models/currentWeather.model';
@@ -34,6 +34,7 @@ import { Temperature } from 'src/app/shared/models/temperature.model';
   ],
 })
 export class WeatherPageComponent implements OnInit, OnChanges, OnDestroy {
+  private destroy$ = new Subject<void>();
   @Input() location: Location;
   weather: CurrentWeather;
   temperature: Temperature;
@@ -44,18 +45,25 @@ export class WeatherPageComponent implements OnInit, OnChanges, OnDestroy {
     private loaderService: LoaderService,
     private snackBar: MatSnackBar
   ) {}
-  ngOnDestroy(): void {}
   ngOnInit(): void {
     this.loadWeather();
-    this.weatherService.temperatureUnitChanged.subscribe(() => {
-      this.temperature = this.weatherService.isMetric
-        ? this.weather.Temperature.Metric
-        : this.weather.Temperature.Imperial;
-      this.loadForcast();
-    });
-    this.loaderService.stateChange.subscribe((isLoading) => {
-      this.isWeatherLoading = isLoading;
-    });
+    this.weatherService.temperatureUnitChanged
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.temperature = this.weatherService.isMetric
+          ? this.weather.Temperature.Metric
+          : this.weather.Temperature.Imperial;
+        this.loadForcast();
+      });
+    this.loaderService.stateChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isLoading) => {
+        this.isWeatherLoading = isLoading;
+      });
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
