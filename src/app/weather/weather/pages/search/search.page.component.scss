@@ -1,0 +1,46 @@
+.search-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+  .scrollable-list {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 1em;
+    background-color: white;
+  }
+  .hoverable {
+    cursor: pointer;
+    transition: background-color 0.3s;
+    &:hover {
+      background-color: #f0f0f0;
+    }
+    &.selected {
+      background-color: #e0e0e0;
+    }
+  }
+  .favorite-icon {
+    width: 20px;
+    height: 20px;
+    margin-top: 18px;
+  }
+  .favorite-button {
+    height: 56px;
+    width: 177px;
+  }
+  mat-spinner {
+    margin-left: 10px;
+  }
+  .spinner-container {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+  }
+}

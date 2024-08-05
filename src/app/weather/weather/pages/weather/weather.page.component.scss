@@ -1,0 +1,40 @@
+.weather-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  mat-progress-bar {
+    width: 300px;
+    margin-bottom: 16px;
+  }
+  .current-weather {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+      width: 8px;
+      height: 8px;
+    }
+    .temperature {
+      font-size: 20px;
+      display: flex;
+      gap: 2px;
+    }
+  }
+  img {
+    width: 4px;
+    height: 4px;
+  }
+  .forecasts-grid {
+    display: grid;
+    width: 300px;
+    grid-template-columns: 120px 60px 60px;
+    margin: auto;
+    gap: 30px;
+    .temp {
+      display: flex;
+      gap: 2px;
+    }
+  }
+}

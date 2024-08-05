@@ -1,0 +1,27 @@
+<div class="weather-wrapper" [@fadeIn]>
+  <mat-progress-bar
+    *ngIf="isWeatherLoading"
+    mode="indeterminate"
+  ></mat-progress-bar>
+
+  <div class="current-weather" *ngIf="weather">
+    <div *ngIf="temperature" class="temperature">
+      {{ temperature.Value }}
+      <img src="/assets/icons/circle-icon.svg" />
+    </div>
+    {{ weather.WeatherText }}
+  </div>
+  <div class="forecasts-grid" *ngFor="let day of forecast?.DailyForecasts">
+    <div>
+      {{ day.Date | date : "EEEE" }}
+    </div>
+    <div class="temp">
+      H: {{ day.Temperature.Maximum.Value }}
+      <img src="/assets/icons/circle-icon.svg" />
+    </div>
+    <div class="temp">
+      L: {{ day.Temperature.Minimum.Value }}
+      <img src="/assets/icons/circle-icon.svg" />
+    </div>
+  </div>
+</div>

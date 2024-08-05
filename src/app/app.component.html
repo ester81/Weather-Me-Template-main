@@ -1,0 +1,14 @@
+<div id="app-wrapper">
+  <div id="sidenav-container">
+    <h1>WeatherMe</h1>
+    <mat-slide-toggle id="slide-toggle" (click)="changeTemperatureUnit()">
+      <label> Temperature in Fahrenheit </label>
+    </mat-slide-toggle>
+    <mat-slide-toggle id="theme-toggle" (change)="toggleTheme($event.checked)">
+      <label> Dark Theme </label>
+    </mat-slide-toggle>
+  </div>
+  <div id="content-wrapper">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="search-container">
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        placeholder="Enter your search query"
+        [formControl]="searchControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="selectResult($event.option.value)"
+      >
+        <mat-option
+          *ngFor="let result of searchResults | async"
+          [value]="result"
+        >
+          {{ result.LocalizedName }}
+        </mat-option>
+      </mat-autocomplete>
+      <div class="spinner-container" *ngIf="isLocationLoading">
+        <mat-spinner diameter="20"></mat-spinner>
+      </div>
+    </mat-form-field>
+  </div>
+  <img
+    *ngIf="selectedResult"
+    class="favorite-icon"
+    [src]="
+      isCityFavorite
+        ? '/assets/icons/favorite-icon.svg'
+        : '/assets/icons/empty-favorite-icon.svg'
+    "
+    alt=""
+  />
+  <button
+    class="favorite-button"
+    *ngIf="selectedResult"
+    mat-button
+    (click)="addOrRemoveToFavorites(selectedResult)"
+  >
+    {{ isCityFavorite ? "Remove from Favorites" : "Add to Favorites" }}
+  </button>
+</div>
+<div *ngIf="selectedResult?.LocalizedName">
+  <app-weather [location]="selectedResult"></app-weather>
+</div>
